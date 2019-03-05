@@ -1,7 +1,7 @@
 /* global DISABLE_FLAKEY */
 
 import { createElement as h, render, Component } from '../../src/index';
-import { setupScratch, setupRerender, teardown, getMixedArray, mixedArrayHTML } from '../_util/helpers';
+import { setupScratch, setupRerender, teardown, getMixedArray, mixedArrayHTML, sortCss } from '../_util/helpers';
 
 /** @jsx h */
 
@@ -401,7 +401,7 @@ describe('render()', () => {
 
 		it('should support css custom properties', () => {
 			render(<div style={{ '--foo': 'red', color: 'var(--foo)' }}>test</div>, scratch);
-			expect(scratch.firstChild.style.cssText).to.equal('--foo:red; color: var(--foo);');
+			expect(sortCss(scratch.firstChild.style.cssText)).to.equal('--foo:red; color: var(--foo);');
 			expect(window.getComputedStyle(scratch.firstChild).color).to.equal('rgb(255, 0, 0)');
 		});
 	});
