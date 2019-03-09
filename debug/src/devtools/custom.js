@@ -147,7 +147,7 @@ export function getInstance(vnode) {
 		// anything into the DOM we revert to using the vnode as instance.
 		return vnode._children.length > 0 && vnode._children[0]._dom!=null
 			? /** @type {import('../internal').PreactElement | null} */
-			(vnode._children[0]._dom.parentNode)
+			(vnode._children[0]._dom.parent)
 			: vnode;
 	}
 	if (vnode._component!=null) return vnode._component;
