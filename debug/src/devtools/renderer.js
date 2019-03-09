@@ -24,6 +24,13 @@ export class Renderer {
 		 */
 		this.inst2vnode = new WeakMap();
 		this.connected = false;
+
+		this.mask = document.createElement('div');
+		this.mask.style.position = 'absolute';
+		this.mask.style.zIndex = '-100000000';
+		this.mask.style.visibility = 'hidden';
+		this.mask.style.background = 'rgba(0, 0, 0, 0.5)';
+		document.body.appendChild(this.mask);
 	}
 
 	/**
@@ -228,7 +235,23 @@ export class Renderer {
 	 * @returns {import('../internal').PreactElement | Text}
 	 */
 	getNativeFromReactElement(vnode) {
-		return vnode._dom;
+		const node = vnode._dom;
+		const dom = node.__zr.dom;
+		const outer = dom.getBoundingClientRect();
+
+		const bounds = Object.assign({}, node.getBoundingRect());
+		if (!node.isGroup) {
+			const [x, y] = node.transformCoordToGlobal(0, 0);
+			bounds.x += x;
+			bounds.y += y;
+		}
+
+		const style = this.mask.style;
+		style.left = bounds.x + outer.left + 'px';
+		style.top = bounds.y + outer.top + 'px';
+		style.width = bounds.width + 'px';
+		style.height = bounds.height + 'px';
+		return this.mask;
 	}
 
 	/**
