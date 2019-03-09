@@ -5,7 +5,7 @@ import { diffChildren } from './children';
 import { diffProps } from './props';
 import { assign } from '../util';
 import options from '../options';
-
+import { createNode, removeNode } from './graphic';
 /**
  * Diff two virtual nodes and apply proper changes to the DOM
  * @param {import('../internal').PreactElement | Text} dom The DOM element representing
@@ -214,9 +214,9 @@ export function commitRoot(mounts, root) {
  */
 function diffElementNodes(dom, newVNode, oldVNode, context, isSvg, excessDomChildren, mounts, ancestorComponent) {
 	let d = dom;
-
+	// TODO Jeffrey: remove svg & text node (and hydrating perhaps) logic
 	// Tracks entering and exiting SVG namespace when descending through the tree.
-	isSvg = isSvg ? newVNode.type !== 'foreignObject' : newVNode.type === 'svg';
+	// isSvg = isSvg ? newVNode.type !== 'foreignObject' : newVNode.type === 'svg';
 
 	if (dom==null && excessDomChildren!=null) {
 		for (let i=0; i<excessDomChildren.length; i++) {
@@ -230,7 +230,7 @@ function diffElementNodes(dom, newVNode, oldVNode, context, isSvg, excessDomChil
 	}
 
 	if (dom==null) {
-		dom = newVNode.type===null ? document.createTextNode(newVNode.text) : isSvg ? document.createElementNS('http://www.w3.org/2000/svg', newVNode.type) : document.createElement(newVNode.type);
+		dom = createNode(newVNode.type);//newVNode.type===null ? document.createTextNode(newVNode.text) : isSvg ? document.createElementNS('http://www.w3.org/2000/svg', newVNode.type) : document.createElement(newVNode.type);
 
 		// we created a new parent, so none of the previously attached children can be reused:
 		excessDomChildren = null;
@@ -295,7 +295,7 @@ export function unmount(vnode, ancestorComponent) {
 		applyRef(r, null, ancestorComponent);
 	}
 
-	if ((r = vnode._dom)!=null) r.remove();
+	if ((r = vnode._dom)!=null) removeNode(r);
 
 	vnode._dom = vnode._lastDomChild = null;
 
