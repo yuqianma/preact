@@ -236,15 +236,13 @@ export class Renderer {
 	 */
 	getNativeFromReactElement(vnode) {
 		const node = vnode._dom;
-		const dom = node.__zr.dom;
+		const dom = node.__zr.painter.getViewportRoot();
 		const outer = dom.getBoundingClientRect();
 
 		const bounds = Object.assign({}, node.getBoundingRect());
-		if (!node.isGroup) {
-			const [x, y] = node.transformCoordToGlobal(0, 0);
-			bounds.x += x;
-			bounds.y += y;
-		}
+		const [x, y] = node.transformCoordToGlobal(0, 0);
+		bounds.x += x;
+		bounds.y += y;
 
 		const style = this.mask.style;
 		style.left = bounds.x + outer.left + 'px';
