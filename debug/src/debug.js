@@ -9,22 +9,22 @@ export function initDebug() {
 	let oldDiffed = options.diffed;
 	let oldVnode = options.vnode;
 
-	options.root = (vnode, parentNode) => {
-		if (!parentNode) {
-			throw new Error('Undefined parent passed to render(), this is the second argument.\nCheck if the element is available in the DOM/has the correct id.');
-		}
-		let isValid;
-		switch (parentNode.nodeType) {
-			case ELEMENT_NODE:
-			case DOCUMENT_FRAGMENT_NODE:
-			case DOCUMENT_NODE: isValid = true; break;
-			default: isValid = false;
-		}
-		if (!isValid) throw new Error(`
-			Expected a valid HTML node as a second argument to render.
-			Received ${parentNode} instead: render(<${vnode.type.name || vnode.type} />, ${parentNode});
-		`);
-	};
+	// options.root = (vnode, parentNode) => {
+	// 	if (!parentNode) {
+	// 		throw new Error('Undefined parent passed to render(), this is the second argument.\nCheck if the element is available in the DOM/has the correct id.');
+	// 	}
+	// 	let isValid;
+	// 	switch (parentNode.nodeType) {
+	// 		case ELEMENT_NODE:
+	// 		case DOCUMENT_FRAGMENT_NODE:
+	// 		case DOCUMENT_NODE: isValid = true; break;
+	// 		default: isValid = false;
+	// 	}
+	// 	if (!isValid) throw new Error(`
+	// 		Expected a valid HTML node as a second argument to render.
+	// 		Received ${parentNode} instead: render(<${vnode.type.name || vnode.type} />, ${parentNode});
+	// 	`);
+	// };
 
 	options.diff = vnode => {
 		let { type, props } = vnode;

@@ -2,9 +2,10 @@ import { EMPTY_OBJ, EMPTY_ARR } from '../constants';
 import { Component, enqueueRender } from '../component';
 import { coerceToVNode, Fragment } from '../create-element';
 import { diffChildren } from './children';
-import { diffProps } from './props';
+// import { diffProps } from './props';
 import { assign, removeNode } from '../util';
 import options from '../options';
+import { createNode, diffProps } from '../zr-graphic';
 
 /**
  * Diff two virtual nodes and apply proper changes to the DOM
@@ -230,7 +231,7 @@ function diffElementNodes(dom, newVNode, oldVNode, context, isSvg, excessDomChil
 	let newProps = newVNode.props;
 
 	// Tracks entering and exiting SVG namespace when descending through the tree.
-	isSvg = newVNode.type==='svg' || isSvg;
+	// isSvg = newVNode.type==='svg' || isSvg;
 
 	if (dom==null && excessDomChildren!=null) {
 		for (i=0; i<excessDomChildren.length; i++) {
@@ -244,10 +245,11 @@ function diffElementNodes(dom, newVNode, oldVNode, context, isSvg, excessDomChil
 	}
 
 	if (dom==null) {
-		if (newVNode.type===null) {
-			return document.createTextNode(newProps);
-		}
-		dom = isSvg ? document.createElementNS('http://www.w3.org/2000/svg', newVNode.type) : document.createElement(newVNode.type);
+		// if (newVNode.type===null) {
+		// 	return document.createTextNode(newProps);
+		// }
+		// dom = isSvg ? document.createElementNS('http://www.w3.org/2000/svg', newVNode.type) : document.createElement(newVNode.type);
+		dom = createNode(newVNode.type);
 		// we created a new parent, so none of the previously attached children can be reused:
 		excessDomChildren = null;
 	}
