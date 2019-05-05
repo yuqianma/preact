@@ -11,5 +11,5 @@ specs.basic = function () {
 		<rect position={[0, 150]} shape={{ width: 100, height: 100 }} style={{ fill: '#0bd' }} />
 	</g>);
 
-	render(<App/>, this.root);
+	this.zr = render(<App/>, this.rootDom);
 };

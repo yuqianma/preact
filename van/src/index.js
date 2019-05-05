@@ -1,4 +1,3 @@
-import * as zrender from 'zrender/zrender';
 import G from 'zrender/container/G';
 import { options } from 'preact';
 
@@ -22,27 +21,12 @@ function runSpec () {
 	if (spec) {
 		window._spec = spec;
 		spec.before = spec.before || function () {
-			const zr = zrender.init(rootDom);
-
-			// let deferedRendering = null;
-			// options.debounceRendering = function(cb) {
-			// 	deferedRendering = cb;
-			// };
-			// window.rendering = function () {
-			// 	console.log('rendering');
-			// 	deferedRendering();
-			// 	zr.refreshImmediately();
-			// };
-
-			const root = new G();
-			zr.add(root);
-			Object.assign(this, { rootDom, zr, root });
+			this.rootDom = rootDom;
 		};
 		spec.after = spec.after || function () {
 			this.zr.dispose();
 			delete this.zr;
 			delete this.rootDom;
-			delete this.root;
 		};
 
 		if (prevSpec && prevSpec.after) {

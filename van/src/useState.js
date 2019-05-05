@@ -28,6 +28,6 @@ specs.useState = function () {
 		<Button key='2' position={[0, 100]}/>
 	</g>);
 
-	render(<App/>, this.root);
+	this.zr = render(<App/>, this.rootDom);
 };
 

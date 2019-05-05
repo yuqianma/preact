@@ -9,5 +9,5 @@ specs.fragment= function () {
 		</Fragment>
 	</>);
 
-	render(<App/>, this.root);
+	this.zr = render(<App/>, this.rootDom);
 };
