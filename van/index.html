@@ -13,10 +13,17 @@
         overflow: hidden;
     }
 
+	#specs {
+		width: 200px;
+		height: 100%;
+	}
+
     #app {
-        width: 95vw;
-        height: 95vh;
-        margin: 2.5vh 0 0 2.5vw;
+		position: absolute;
+		left: 220px;
+		top: 10px;
+		right: 10px;
+		bottom: 10px;
         border: 1px solid #ccc;
         /* background: #eee; */
     }
@@ -24,6 +31,8 @@
 </head>
 <body>
 
+<ul id="specs">
+</ul>
 <div id="app"></div>
 
 <script src="index.js"></script>
